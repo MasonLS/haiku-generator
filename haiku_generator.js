@@ -5,7 +5,28 @@
 var formattedData = require('./haiku.js');
 
 //allow user to manipulate structure from CLI
-var structure = JSON.parse(process.argv[2]);
+//var structure = JSON.parse(process.argv[2]);
+
+//OR: generate (superficially) random structure
+function getHaikuStructure(){
+	var structure = [];
+	var line1and3 = [[2,3],[3,2],[5]];
+	var line2 = [[3,4],[4,3],[5,2],[2,5],[2,2,3],[2,3,2],[3,2,2],[7],[7]];
+
+	structure.push(getRandomElement(line2));
+	structure.push(getRandomElement(line1and3));
+	structure.unshift(getRandomElement(line1and3));
+
+	return structure;
+}
+
+var getRandomElement = function(arr){
+		return arr[Math.floor(Math.random()*arr.length)];
+	}
+
+var structure = getHaikuStructure();
+
+
 
 function createHaiku(structure, syllablesArr){
 	var haiku = [];
@@ -28,10 +49,6 @@ function createHaiku(structure, syllablesArr){
 
 	return haiku.join('\n');
 }
-
-var getRandomElement = function(arr){
-		return arr[Math.floor(Math.random()*arr.length)];
-	}
 
 console.log(createHaiku(structure, formattedData));
 
